@@ -1,224 +1,192 @@
 #include "metro.h"
 
-std::mutex IcheriSheherRight;
-std::mutex IcheriSheherLeft;
-std::mutex SahilRight;
-std::mutex SahilLeft;
-std::mutex May28Right;
-std::mutex May28Left;
-std::mutex GenclikRight;
-std::mutex GenclikLeft;
-std::mutex NarimanNarimanovRight;
-std::mutex NarimanNarimanovLeft;
-std::mutex BakmilRight;
-std::mutex BakmilLeft;
-std::mutex UlduzRight;
-std::mutex UlduzLeft;
-std::mutex KorogluRight;
-std::mutex KorogluLeft;
-std::mutex QaraQarayevRight;
-std::mutex QaraQarayevLeft;
-std::mutex NeftchilerRight;
-std::mutex NeftchilerLeft;
-std::mutex XalqlarDostluquRight;
-std::mutex XalqlarDostluquLeft;
-std::mutex AhmedliRight;
-std::mutex AhmedliLeft;
+// Мьютексы для красной линии
+std::mutex IcheriSheherRight, IcheriSheherLeft;
+std::mutex SahilRight, SahilLeft;
+std::mutex May28Right, May28Left;
+std::mutex GenclikRight, GenclikLeft;
+std::mutex NarimanNarimanovRight, NarimanNarimanovLeft;
+std::mutex BakmilRight, BakmilLeft;
+std::mutex UlduzRight, UlduzLeft;
+std::mutex KorogluRight, KorogluLeft;
+std::mutex QaraQarayevRight, QaraQarayevLeft;
+std::mutex NeftchilerRight, NeftchilerLeft;
+std::mutex XalqlarDostluquRight, XalqlarDostluquLeft;
+std::mutex AhmedliRight, AhmedliLeft;
 
-void IcheriSheher(int index){
-    { 
-        std::lock_guard<std::mutex> guard(IcheriSheherRight);
-        std::cout << "IcheriSheher -> " << index << " -> Sahil\n";
-    }
-    sleep_(3);
+// Объявляем общие мьютексы для пересадочных узлов
+std::mutex May28_Interchange;
+
+// Функция для действий на станции красной линии
+void RedLineStationAction(const std::string& from, const std::string& to, std::mutex& station_mutex, int index){
+    std::unique_lock<std::mutex> lock(station_mutex);
+    
+    std::string start_time = getFormattedTime(index);
+    
+    // Увеличиваем смещение времени для поезда (поездка между станциями)
+    train_time_offset[index] += REAL_TRAVEL_TIME_MIN;
+    
+    std::string arrival_time = getFormattedTime(index);
+    
+    std::string travel_message = from + " -> " + to + " " + start_time + " - " + arrival_time;
+    logToFile(index, travel_message);
+    
+    // Симулируем время в пути
+    sleep_(TRAVEL_TIME_MS);
+    
+    logToFile(index, "Поезд " + std::to_string(index) + " прибыл на станцию " + to);
+    
+    // Остановка на станции на 1 минуту
+    logToFile(index, "Поезд " + std::to_string(index) + " делает остановку на станции " + to);
+    
+    // Увеличиваем смещение времени для остановки на станции
+    train_time_offset[index] += 1; // 1 минута остановки
+    
+    std::string departure_time = getFormattedTime(index);
+    logToFile(index, "Поезд " + std::to_string(index) + " отправляется со станции " + to + " в " + departure_time);
+    
+    // Симулируем время остановки
+    sleep_(1); // 1 миллисекунда в симуляции для остановки
 }
 
-void Sahil(int index){
-    { 
-        std::lock_guard<std::mutex> guard(SahilRight);
-        std::cout << "Sahil-> " << index << " -> May28\n";
-    }
-    sleep_(3);
+// Функции для движения вперед (в сторону HeziAslanov)
+void IcheriSheher(int index) {
+    RedLineStationAction("IcheriSheher", "Sahil", IcheriSheherRight, index);
 }
 
-void May28(int index){
-    { 
-        std::lock_guard<std::mutex> guard(May28Right);
-        std::cout << "May28-> " << index << " -> Genclik\n";
-    }
-    sleep_(3);
+void Sahil(int index) {
+    RedLineStationAction("Sahil", "May28", SahilRight, index);
 }
 
-void Genclik(int index){
-    { 
-        std::lock_guard<std::mutex> guard(GenclikRight);
-        std::cout << "Genclik-> " << index << " -> NarimanNarimanov\n";
-    }
-    sleep_(3);
+void May28(int index) {
+    // При входе на пересадочную станцию блокируем общий мьютекс
+    std::lock_guard<std::mutex> interchange_lock(May28_Interchange);
+    
+    RedLineStationAction("May28", "Genclik", May28Right, index);
 }
 
-void NarimanNarimanov(int index){
-    { 
-        std::lock_guard<std::mutex> guard(NarimanNarimanovRight);
-        std::cout << "NarimanNarimanov-> " << index << " -> Bakmil\n";
-    }
-    sleep_(3);
+void Genclik(int index) {
+    // Блокируем мьютекс для общего участка с зеленой линией
+    std::lock_guard<std::mutex> interchange_lock(red_green_interchange_mutex);
+    
+    RedLineStationAction("Genclik", "NarimanNarimanov", GenclikRight, index);
 }
 
-void Bakmil(int index){
-    { 
-        std::lock_guard<std::mutex> guard(BakmilRight);
-        std::cout << "Bakmil-> " << index << " -> Ulduz\n";
-    }
-    sleep_(3);
+void NarimanNarimanov(int index) {
+    // Блокируем мьютекс для общего участка с зеленой линией
+    std::lock_guard<std::mutex> interchange_lock(red_green_interchange_mutex);
+    
+    RedLineStationAction("NarimanNarimanov", "Bakmil", NarimanNarimanovRight, index);
 }
 
-void Ulduz(int index){
-    { 
-        std::lock_guard<std::mutex> guard(UlduzRight);
-        std::cout << "Ulduz-> " << index << " -> Koroglu\n";
-    }
-    sleep_(3);
+void Bakmil(int index) {
+    // Блокируем мьютекс для общего участка с зеленой линией
+    std::lock_guard<std::mutex> interchange_lock(red_green_interchange_mutex);
+    
+    RedLineStationAction("Bakmil", "Ulduz", BakmilRight, index);
 }
 
-void Koroglu(int index){
-    { 
-        std::lock_guard<std::mutex> guard(KorogluRight);
-        std::cout << "Koroglu-> " << index << " -> QaraQarayev\n";
-    }
-    sleep_(3);
+void Ulduz(int index) {
+    RedLineStationAction("Ulduz", "Koroglu", UlduzRight, index);
 }
 
-void QaraQarayev(int index){
-    { 
-        std::lock_guard<std::mutex> guard(QaraQarayevRight);
-        std::cout << "QaraQarayev-> " << index << " -> Neftchiler\n";
-    }
-    sleep_(3);
+void Koroglu(int index) {
+    RedLineStationAction("Koroglu", "QaraQarayev", KorogluRight, index);
 }
 
-void Neftchiler(int index){
-    { 
-        std::lock_guard<std::mutex> guard(NeftchilerRight);
-        std::cout << "Neftchiler-> " << index << " -> XalqlarDostluqu\n";
-    }
-    sleep_(3);
+void QaraQarayev(int index) {
+    RedLineStationAction("QaraQarayev", "Neftchiler", QaraQarayevRight, index);
 }
 
-void XalqlarDostluqu(int index){
-    { 
-        std::lock_guard<std::mutex> guard(XalqlarDostluquRight);
-        std::cout << "XalqlarDostluqu-> " << index << " -> Ahmedli\n";
-    }
-    sleep_(3);
+void Neftchiler(int index) {
+    RedLineStationAction("Neftchiler", "XalqlarDostluqu", NeftchilerRight, index);
 }
 
-void Ahmedli(int index){
-    { 
-        std::lock_guard<std::mutex> guard(AhmedliRight);
-        std::cout << "Ahmedli-> " << index << " -> HeziAslanov\n";
-    }
-    sleep_(3);
+void XalqlarDostluqu(int index) {
+    RedLineStationAction("XalqlarDostluqu", "Ahmedli", XalqlarDostluquRight, index);
 }
 
-
-void HeziAslanov_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(AhmedliLeft);
-        std::cout << "HeziAslanov-> " << index << " -> Ahmedli\n";
-    }
-    sleep_(3);
+void Ahmedli(int index) {
+    RedLineStationAction("Ahmedli", "HeziAslanov", AhmedliRight, index);
 }
 
-void Ahmedli_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(XalqlarDostluquLeft);
-        std::cout << "Ahmedli-> " << index << " -> XalqlarDostluqu\n";
-    }
-    sleep_(3);
+// Функции для движения назад (в сторону IcheriSheher)
+void HeziAslanov_(int index) {
+    RedLineStationAction("HeziAslanov", "Ahmedli", AhmedliLeft, index);
 }
 
-void XalqlarDostluqu_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(NeftchilerLeft);
-        std::cout << "XalqlarDostluqu-> " << index << " -> Neftchiler\n";
-    }
-    sleep_(3);
+void Ahmedli_(int index) {
+    RedLineStationAction("Ahmedli", "XalqlarDostluqu", XalqlarDostluquLeft, index);
 }
 
-void Neftchiler_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(QaraQarayevLeft);
-        std::cout << "Neftchiler-> " << index << " -> QaraQarayev\n";
-    }
-    sleep_(3);
+void XalqlarDostluqu_(int index) {
+    RedLineStationAction("XalqlarDostluqu", "Neftchiler", NeftchilerLeft, index);
 }
 
-void QaraQarayev_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(KorogluLeft);
-        std::cout << "QaraQarayev-> " << index << " -> Koroglu\n";
-    }
-    sleep_(3);
+void Neftchiler_(int index) {
+    RedLineStationAction("Neftchiler", "QaraQarayev", QaraQarayevLeft, index);
 }
 
-void Koroglu_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(UlduzLeft);
-        std::cout << "Koroglu-> " << index << " -> Ulduz\n";
-    }
-    sleep_(3);
+void QaraQarayev_(int index) {
+    RedLineStationAction("QaraQarayev", "Koroglu", QaraQarayevLeft, index);
 }
 
-void Ulduz_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(BakmilLeft);
-        std::cout << "Ulduz-> " << index << " -> Bakmil\n";
-    }
-    sleep_(3);
+void Koroglu_(int index) {
+    RedLineStationAction("Koroglu", "Ulduz", KorogluLeft, index);
 }
 
-void Bakmil_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(NarimanNarimanovLeft);
-        std::cout << "Bakmil-> " << index << " -> NarimanNarimanov\n";
-    }
-    sleep_(3);
+void Ulduz_(int index) {
+    RedLineStationAction("Ulduz", "NarimanNarimanov", UlduzLeft, index);
 }
 
-void NarimanNarimanov_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(GenclikLeft);
-        std::cout << "NarimanNarimanov-> " << index << " -> Genclik\n";
-    }
-    sleep_(3);
+void Bakmil_(int index) {
+    // Блокируем мьютекс для общего участка с зеленой линией
+    std::lock_guard<std::mutex> interchange_lock(red_green_interchange_mutex);
+    
+    RedLineStationAction("Bakmil", "NarimanNarimanov", NarimanNarimanovLeft, index);
 }
 
-void Genclik_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(May28Left);
-        std::cout << "Genclik-> " << index << " -> May28\n";
-    }
-    sleep_(3);
+void NarimanNarimanov_(int index) {
+    // Блокируем мьютекс для общего участка с зеленой линией
+    std::lock_guard<std::mutex> interchange_lock(red_green_interchange_mutex);
+    
+    RedLineStationAction("NarimanNarimanov", "Genclik", GenclikLeft, index);
 }
 
-void May28_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(SahilLeft);
-        std::cout << "May28-> " << index << " -> Sahil\n";
-    }
-    sleep_(3);
+void Genclik_(int index) {
+    // Блокируем мьютекс для общего участка с зеленой линией
+    std::lock_guard<std::mutex> interchange_lock(red_green_interchange_mutex);
+    
+    RedLineStationAction("Genclik", "May28", May28Left, index);
 }
 
-void Sahil_(int index){
-    { 
-        std::lock_guard<std::mutex> guard(IcheriSheherLeft);
-        std::cout << "Sahil-> " << index << " -> IcheriSheher\n";
-    }
-    sleep_(3);
+void May28_(int index) {
+    // При входе на пересадочную станцию блокируем общий мьютекс
+    std::lock_guard<std::mutex> interchange_lock(May28_Interchange);
+    
+    RedLineStationAction("May28", "Sahil", SahilLeft, index);
 }
 
-void Dvijeniye_krasniy(int index){
+void Sahil_(int index) {
+    RedLineStationAction("Sahil", "IcheriSheher", IcheriSheherLeft, index);
+}
+
+// Логирование действий для красной линии
+void logRedLineAction(int index, const std::string& action) {
+    std::string time = getFormattedTime(index);
+    logToFile(index, time + " - " + action);
+    
+    // Добавляем небольшое смещение для "непоездных" действий
+    train_time_offset[index] += 2; // 2 минуты на действие
+}
+
+void Dvijeniye_krasniy(int index) {
+    // Инициализация времени для этого поезда
+    train_time_offset[index] = (index - 4) * 10; // Поезд 4 начнет первым, потом 5, потом 6
+    
+    // Начальное положение - поезд находится на полпути к IcheriSheher
+    logRedLineAction(index, "Поезд " + std::to_string(index) + " начинает движение от Bakmil в сторону IcheriSheher");
+    
     Bakmil_(index);
     sleep_(1);
     NarimanNarimanov_(index);
@@ -229,14 +197,102 @@ void Dvijeniye_krasniy(int index){
     sleep_(1);
     Sahil_(index);
     sleep_(1);
-
-    for(int i=1; ; i++){
+    
+    for(int i = 1; i <= 10; i++) { // Ограничим до 10 кругов вместо бесконечного цикла
+        logRedLineAction(index, "Поезд " + std::to_string(index) + " начинает круг " + std::to_string(i));
+        
         IcheriSheher(index);
         sleep_(1);
         Sahil(index);
-        if( i%5 == 0){
-
+        
+        if(i % 5 == 0) {
+            // Раз в 5 поездок заворачиваем на Bakmil
+            logRedLineAction(index, "Поезд " + std::to_string(index) + " следует по короткому маршруту до Bakmil");
+            
+            IcheriSheher(index);
+            sleep_(1);
+            Sahil(index);
+            sleep_(1);
+            May28(index);
+            sleep_(1);
+            Genclik(index);
+            sleep_(1);
+            NarimanNarimanov(index);
+            sleep_(1);
+            Bakmil(index);
+            sleep_(1);
+            
+            // Конечная, делаем разворот
+            logRedLineAction(index, "Поезд " + std::to_string(index) + " прибыл на конечную Bakmil и делает разворот");
+            train_time_offset[index] += 5; // Пять минут на разворот
+            
+            Bakmil_(index);
+            sleep_(1);
+            NarimanNarimanov_(index);
+            sleep_(1);
+            Genclik_(index);
+            sleep_(1);
+            May28_(index);
+            sleep_(1);
+            Sahil_(index);
+            
+            logRedLineAction(index, "Поезд " + std::to_string(index) + " завершил короткий маршрут и вернулся к IcheriSheher");
+        } else {
+            // Обычный маршрут до HeziAslanov
+            logRedLineAction(index, "Поезд " + std::to_string(index) + " следует по полному маршруту до HeziAslanov");
+            
+            IcheriSheher(index);
+            sleep_(1);
+            Sahil(index);
+            sleep_(1);
+            May28(index);
+            sleep_(1);
+            Genclik(index);
+            sleep_(1);
+            NarimanNarimanov(index);
+            sleep_(1);
+            Ulduz(index);
+            sleep_(1);
+            Koroglu(index);
+            sleep_(1);
+            QaraQarayev(index);
+            sleep_(1);
+            Neftchiler(index);
+            sleep_(1);
+            XalqlarDostluqu(index);
+            sleep_(1);
+            Ahmedli(index);
+            
+            // Прибыли на конечную станцию
+            logRedLineAction(index, "Поезд " + std::to_string(index) + " прибыл на конечную HeziAslanov и делает разворот");
+            train_time_offset[index] += 5; // Пять минут на разворот
+            
+            HeziAslanov_(index);
+            sleep_(1);
+            Ahmedli_(index);
+            sleep_(1);
+            XalqlarDostluqu_(index);
+            sleep_(1);
+            Neftchiler_(index);
+            sleep_(1);
+            QaraQarayev_(index);
+            sleep_(1);
+            Koroglu_(index);
+            sleep_(1);
+            Ulduz_(index);
+            sleep_(1);
+            NarimanNarimanov_(index);
+            sleep_(1);
+            Genclik_(index);
+            sleep_(1);
+            May28_(index);
+            sleep_(1);
+            Sahil_(index);
+            sleep_(1);
+            
+            logRedLineAction(index, "Поезд " + std::to_string(index) + " завершил полный маршрут и вернулся к IcheriSheher");
         }
+        
+        logRedLineAction(index, "Поезд " + std::to_string(index) + " завершил круг " + std::to_string(i));
     }
-
 }
