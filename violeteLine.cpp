@@ -25,6 +25,11 @@ std::string getFormattedTime(int train_index, int additional_minutes) {
         minutes -= 60;
     }
     
+    // Проверка перехода на следующий день
+    if (hours >= 24) {
+        hours %= 24;
+    }
+    
     std::stringstream ss;
     ss << std::setfill('0') << std::setw(2) << hours << ":"
        << std::setfill('0') << std::setw(2) << minutes;
@@ -33,38 +38,50 @@ std::string getFormattedTime(int train_index, int additional_minutes) {
 }
 
 void logToFile(int train_index, const std::string& message) {
-    std::lock_guard<std::mutex> file_guard(files_mutex);
-    std::ofstream file("train_" + std::to_string(train_index) + ".txt", std::ios::app);
-    if (file.is_open()) {
-        file << message << std::endl;
-        file.close();
+    try {
+        std::lock_guard<std::mutex> file_guard(files_mutex);
+        std::ofstream file("train_" + std::to_string(train_index) + ".txt", std::ios::app);
+        if (file.is_open()) {
+            file << message << std::endl;
+            file.close();
+        } else {
+            std::cerr << "Ошибка: не удалось открыть файл для поезда " << train_index << std::endl;
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка при записи в файл: " << e.what() << std::endl;
     }
 }
 
 void StationAction(const std::string& from, const std::string& to, std::mutex& station_mutex, int index){
-    std::unique_lock<std::mutex> lock(station_mutex);
-    
-    std::string start_time = getFormattedTime(index);
-    
-    train_time_offset[index] += REAL_TRAVEL_TIME_MIN;
-    
-    std::string arrival_time = getFormattedTime(index);
-    
-    std::string travel_message = from + " -> " + to + " " + start_time + " - " + arrival_time;
-    logToFile(index, travel_message);
-    
-    sleep_(TRAVEL_TIME_MS);
-    
-    logToFile(index, "Поезд " + std::to_string(index) + " прибыл на станцию " + to);
-    
-    logToFile(index, "Поезд " + std::to_string(index) + " делает остановку на станции " + to);
-    
-    train_time_offset[index] += 1;
-    
-    std::string departure_time = getFormattedTime(index);
-    logToFile(index, "Поезд " + std::to_string(index) + " отправляется со станции " + to + " в " + departure_time);
-    
-    sleep_(1);
+    try {
+        std::unique_lock<std::mutex> lock(station_mutex);
+        
+        std::string start_time = getFormattedTime(index);
+        
+        train_time_offset[index] += REAL_TRAVEL_TIME_MIN;
+        
+        std::string arrival_time = getFormattedTime(index);
+        
+        std::string travel_message = from + " -> " + to + " " + start_time + " - " + arrival_time;
+        logToFile(index, travel_message);
+        
+        // Увеличиваем время симуляции для лучшей наблюдаемости
+        sleep_(TRAVEL_TIME_MS * 5);
+        
+        logToFile(index, "Поезд " + std::to_string(index) + " прибыл на станцию " + to);
+        
+        logToFile(index, "Поезд " + std::to_string(index) + " делает остановку на станции " + to);
+        
+        train_time_offset[index] += 1;
+        
+        std::string departure_time = getFormattedTime(index);
+        logToFile(index, "Поезд " + std::to_string(index) + " отправляется со станции " + to + " в " + departure_time);
+        
+        // Увеличиваем время остановки для лучшей наблюдаемости
+        sleep_(5);
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка при обработке станции " << to << ": " << e.what() << std::endl;
+    }
 }
 
 void Xodjasan(int index) {
@@ -92,39 +109,57 @@ void Avtovogzal_(int index) {
 }
 
 void logAction(int index, const std::string& action) {
-    std::string time = getFormattedTime(index);
-    logToFile(index, time + " - " + action);
-    
-    train_time_offset[index] += 2;
+    try {
+        std::string time = getFormattedTime(index);
+        logToFile(index, time + " - " + action);
+        
+        train_time_offset[index] += 2;
+    } catch (const std::exception& e) {
+        std::cerr << "Ошибка при логировании действия: " << e.what() << std::endl;
+    }
 }
 
 void Dvijeniye_violete(int index){
-    train_time_offset[index] = (index-1) * 10;
-    
-    {
-        std::ofstream file("train_" + std::to_string(index) + ".txt");
-        file.close();
-    }
-    
-    for(int i = 0; i < 5; ++i){
-        logAction(index, "Поезд " + std::to_string(index) + " готовится к маршруту (круг " + std::to_string(i+1) + ")");
+    try {
+        train_time_offset[index] = (index-1) * 10;
         
-        sleep_(2);
-        Xodjasan(index);
-        sleep_(1);
-        Avtovogzal(index);
-        sleep_(1);
-        VioleteMemarAdjemi(index);
+        // Инициализация файла логов
+        {
+            std::lock_guard<std::mutex> file_guard(files_mutex);
+            std::ofstream file("train_" + std::to_string(index) + ".txt");
+            if (file.is_open()) {
+                file << "=== Лог поезда " << index << " (Фиолетовая линия) ===" << std::endl;
+                file.close();
+            } else {
+                std::cerr << "Ошибка: не удалось создать файл для поезда " << index << std::endl;
+                return;
+            }
+        }
         
-        logAction(index, "Поезд " + std::to_string(index) + " делает разворот");
+        for(int i = 0; i < 5; ++i){
+            logAction(index, "Поезд " + std::to_string(index) + " готовится к маршруту (круг " + std::to_string(i+1) + ")");
+            
+            sleep_(10); // Увеличено для лучшей наблюдаемости
+            Xodjasan(index);
+            sleep_(5);
+            Avtovogzal(index);
+            sleep_(5);
+            VioleteMemarAdjemi(index);
+            
+            logAction(index, "Поезд " + std::to_string(index) + " делает разворот");
+            
+            sleep_(15); // Увеличено для лучшей наблюдаемости
+            Noyabr8(index);
+            sleep_(5);
+            VioleteMemarAdjemi_(index);
+            sleep_(5);
+            Avtovogzal_(index);
+            
+            logAction(index, "Поезд " + std::to_string(index) + " завершил круг " + std::to_string(i+1));
+        }
         
-        sleep_(4);
-        Noyabr8(index);
-        sleep_(1);
-        VioleteMemarAdjemi_(index);
-        sleep_(1);
-        Avtovogzal_(index);
-        
-        logAction(index, "Поезд " + std::to_string(index) + " завершил круг " + std::to_string(i+1));
+        logAction(index, "Поезд " + std::to_string(index) + " завершил маршрут фиолетовой линии");
+    } catch (const std::exception& e) {
+        std::cerr << "Критическая ошибка в маршруте поезда " << index << ": " << e.what() << std::endl;
     }
 }

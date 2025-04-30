@@ -1,0 +1,137 @@
+=== Лог поезда 3 (Фиолетовая линия) ===
+06:20 - Поезд 3 готовится к маршруту (круг 1)
+Xodjasan -> Avtovogzal 06:22 - 06:26
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 06:27
+Avtovogzal -> VioleteMemarAdjemi 06:27 - 06:31
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 06:32
+VioleteMemarAdjemi -> 8Noyabr 06:32 - 06:36
+Поезд 3 прибыл на станцию 8Noyabr
+Поезд 3 делает остановку на станции 8Noyabr
+Поезд 3 отправляется со станции 8Noyabr в 06:37
+06:37 - Поезд 3 делает разворот
+8Noyabr -> VioleteMemarAdjemi 06:39 - 06:43
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 06:44
+VioleteMemarAdjemi -> Avtovogzal 06:44 - 06:48
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 06:49
+Avtovogzal -> Xodjasan 06:49 - 06:53
+Поезд 3 прибыл на станцию Xodjasan
+Поезд 3 делает остановку на станции Xodjasan
+Поезд 3 отправляется со станции Xodjasan в 06:54
+06:54 - Поезд 3 завершил круг 1
+06:56 - Поезд 3 готовится к маршруту (круг 2)
+Xodjasan -> Avtovogzal 06:58 - 07:02
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 07:03
+Avtovogzal -> VioleteMemarAdjemi 07:03 - 07:07
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 07:08
+VioleteMemarAdjemi -> 8Noyabr 07:08 - 07:12
+Поезд 3 прибыл на станцию 8Noyabr
+Поезд 3 делает остановку на станции 8Noyabr
+Поезд 3 отправляется со станции 8Noyabr в 07:13
+07:13 - Поезд 3 делает разворот
+8Noyabr -> VioleteMemarAdjemi 07:15 - 07:19
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 07:20
+VioleteMemarAdjemi -> Avtovogzal 07:20 - 07:24
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 07:25
+Avtovogzal -> Xodjasan 07:25 - 07:29
+Поезд 3 прибыл на станцию Xodjasan
+Поезд 3 делает остановку на станции Xodjasan
+Поезд 3 отправляется со станции Xodjasan в 07:30
+07:30 - Поезд 3 завершил круг 2
+07:32 - Поезд 3 готовится к маршруту (круг 3)
+Xodjasan -> Avtovogzal 07:34 - 07:38
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 07:39
+Avtovogzal -> VioleteMemarAdjemi 07:39 - 07:43
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 07:44
+VioleteMemarAdjemi -> 8Noyabr 07:44 - 07:48
+Поезд 3 прибыл на станцию 8Noyabr
+Поезд 3 делает остановку на станции 8Noyabr
+Поезд 3 отправляется со станции 8Noyabr в 07:49
+07:49 - Поезд 3 делает разворот
+8Noyabr -> VioleteMemarAdjemi 07:51 - 07:55
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 07:56
+VioleteMemarAdjemi -> Avtovogzal 07:56 - 08:00
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 08:01
+Avtovogzal -> Xodjasan 08:01 - 08:05
+Поезд 3 прибыл на станцию Xodjasan
+Поезд 3 делает остановку на станции Xodjasan
+Поезд 3 отправляется со станции Xodjasan в 08:06
+08:06 - Поезд 3 завершил круг 3
+08:08 - Поезд 3 готовится к маршруту (круг 4)
+Xodjasan -> Avtovogzal 08:10 - 08:14
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 08:15
+Avtovogzal -> VioleteMemarAdjemi 08:15 - 08:19
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 08:20
+VioleteMemarAdjemi -> 8Noyabr 08:20 - 08:24
+Поезд 3 прибыл на станцию 8Noyabr
+Поезд 3 делает остановку на станции 8Noyabr
+Поезд 3 отправляется со станции 8Noyabr в 08:25
+08:25 - Поезд 3 делает разворот
+8Noyabr -> VioleteMemarAdjemi 08:27 - 08:31
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 08:32
+VioleteMemarAdjemi -> Avtovogzal 08:32 - 08:36
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 08:37
+Avtovogzal -> Xodjasan 08:37 - 08:41
+Поезд 3 прибыл на станцию Xodjasan
+Поезд 3 делает остановку на станции Xodjasan
+Поезд 3 отправляется со станции Xodjasan в 08:42
+08:42 - Поезд 3 завершил круг 4
+08:44 - Поезд 3 готовится к маршруту (круг 5)
+Xodjasan -> Avtovogzal 08:46 - 08:50
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 08:51
+Avtovogzal -> VioleteMemarAdjemi 08:51 - 08:55
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 08:56
+VioleteMemarAdjemi -> 8Noyabr 08:56 - 09:00
+Поезд 3 прибыл на станцию 8Noyabr
+Поезд 3 делает остановку на станции 8Noyabr
+Поезд 3 отправляется со станции 8Noyabr в 09:01
+09:01 - Поезд 3 делает разворот
+8Noyabr -> VioleteMemarAdjemi 09:03 - 09:07
+Поезд 3 прибыл на станцию VioleteMemarAdjemi
+Поезд 3 делает остановку на станции VioleteMemarAdjemi
+Поезд 3 отправляется со станции VioleteMemarAdjemi в 09:08
+VioleteMemarAdjemi -> Avtovogzal 09:08 - 09:12
+Поезд 3 прибыл на станцию Avtovogzal
+Поезд 3 делает остановку на станции Avtovogzal
+Поезд 3 отправляется со станции Avtovogzal в 09:13
+Avtovogzal -> Xodjasan 09:13 - 09:17
+Поезд 3 прибыл на станцию Xodjasan
+Поезд 3 делает остановку на станции Xodjasan
+Поезд 3 отправляется со станции Xodjasan в 09:18
+09:18 - Поезд 3 завершил круг 5
+09:20 - Поезд 3 завершил маршрут фиолетовой линии
