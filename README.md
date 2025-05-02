@@ -38,7 +38,9 @@ mkdir build && cd build
 cmake ..
 make
 
-### 🚀 Запуск:
+
+
+## 🚀 Запуск:
 ./BMetro
 
 
