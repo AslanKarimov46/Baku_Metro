@@ -21,3 +21,24 @@
   - Динамический расчет времени движения
   - Обработка исключений
 - Генерация логов в формате:
+
+
+
+## 📥 Установка
+
+### Требования:
+- Компилятор с поддержкой C++17 (GCC 9+, Clang 10+)
+- CMake 3.10+
+
+### Сборка:
+```bash
+git clone https://github.com/yourusername/baku-metro-sim.git
+cd baku-metro-sim
+mkdir build && cd build
+cmake ..
+make
+
+### 🚀 Запуск:
+./BMetro
+
+
