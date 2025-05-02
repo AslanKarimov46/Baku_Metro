@@ -41,6 +41,7 @@ make
 
 
 ## 🚀 Запуск:
+```bash
 ./BMetro
 
 
