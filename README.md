@@ -32,8 +32,8 @@
 
 ### Сборка:
 ```bash
-git clone https://github.com/yourusername/baku-metro-sim.git
-cd baku-metro-sim
+https://github.com/AslanKarimov46/Baku_Metro.git
+cd Baku_Metro
 mkdir build && cd build
 cmake ..
 make
