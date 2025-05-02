@@ -117,7 +117,7 @@ void logAction(int index, const std::string& action) {
     }
 }
 
-void Dvijeniye_violete(int index){
+void Dvijeniye_violete(int index, int amountOfCircles){
     try {
         train_time_offset[index] = (index-1) * 10;
         
@@ -133,7 +133,7 @@ void Dvijeniye_violete(int index){
             }
         }
         
-        for(int i = 0; i < 5; ++i){
+        for(int i = 0; i < amountOfCircles; ++i){
             logAction(index, "Поезд " + std::to_string(index) + " готовится к маршруту (круг " + std::to_string(i+1) + ")");
             
             sleep_(10);
@@ -158,5 +158,64 @@ void Dvijeniye_violete(int index){
         logAction(index, "Поезд " + std::to_string(index) + " завершил маршрут фиолетовой линии");
     } catch (const std::exception& e) {
         std::cerr << "Критическая ошибка в маршруте поезда " << index << ": " << e.what() << std::endl;
+    }
+}
+
+
+
+
+
+std::mutex JafarJabbarli_Xetai, Xetai_JafarJabbarli;
+
+
+
+void JafarJabbarli_to_Xetai(int index){
+    StationAction("JafarJabbarli", "Xetai", JafarJabbarli_Xetai, index);
+}
+
+void  Xetai_to_JafarJabbarli(int index){
+    StationAction("Xetai", "JafarJabbarli", Xetai_JafarJabbarli, index);
+}
+
+
+
+void Dvijeniye_Solatoviy(int index, int amountOfCircles){
+    try {
+        train_time_offset[index] = (index-1) * 10;
+        
+        {
+            std::lock_guard<std::mutex> file_guard(files_mutex);
+            std::ofstream file("train_" + std::to_string(index) + ".txt");
+            if (file.is_open()) {
+                file << "=== Лог поезда " << index << " (Салатовая линия) ===" << std::endl;
+                file.close();
+            } else {
+                std::cerr << "Ошибка: не удалось создать файл для поезда " << index << std::endl;
+                return;
+            }
+        }
+
+
+        for(int i=0; i!=5; i++){
+            logAction(index, "Поезд " + std::to_string(index) + " готовится к маршруту (круг " + std::to_string(i+1) + ")");
+            
+            { 
+                JafarJabbarli_to_Xetai(index);
+                sleep_(15);
+            }
+
+            logAction(index, "Поезд " + std::to_string(index) + " делает разворот");
+
+            { 
+                Xetai_to_JafarJabbarli(index);
+                sleep_(15);
+            }
+        
+        }
+    
+    
+        logAction(index, "Поезд " + std::to_string(index) + " завершил маршрут салатовой линии");
+    } catch (const std::exception& e) {
+        std::cerr << "Критическая ошибка в маршруте поезда " << index << " (салатовая линия): " << e.what() << std::endl;
     }
 }

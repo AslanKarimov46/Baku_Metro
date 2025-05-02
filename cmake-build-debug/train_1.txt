@@ -1,0 +1,47 @@
+=== Лог поезда 1 (Фиолетовая линия) ===
+06:00 - Поезд 1 готовится к маршруту (круг 1)
+Xodjasan                 ->   Avtovogzal               [ 06:02 - 06:06 ]
+Avtovogzal               ->   VioleteMemarAdjemi       [ 06:07 - 06:11 ]
+VioleteMemarAdjemi       ->   8Noyabr                  [ 06:12 - 06:16 ]
+06:17 - Поезд 1 делает разворот
+8Noyabr                  ->   VioleteMemarAdjemi       [ 06:19 - 06:23 ]
+VioleteMemarAdjemi       ->   Avtovogzal               [ 06:24 - 06:28 ]
+Avtovogzal               ->   Xodjasan                 [ 06:29 - 06:33 ]
+06:34 - Поезд 1 завершил круг 1
+06:36 - Поезд 1 готовится к маршруту (круг 2)
+Xodjasan                 ->   Avtovogzal               [ 06:38 - 06:42 ]
+Avtovogzal               ->   VioleteMemarAdjemi       [ 06:43 - 06:47 ]
+VioleteMemarAdjemi       ->   8Noyabr                  [ 06:48 - 06:52 ]
+06:53 - Поезд 1 делает разворот
+8Noyabr                  ->   VioleteMemarAdjemi       [ 06:55 - 06:59 ]
+VioleteMemarAdjemi       ->   Avtovogzal               [ 07:00 - 07:04 ]
+Avtovogzal               ->   Xodjasan                 [ 07:05 - 07:09 ]
+07:10 - Поезд 1 завершил круг 2
+07:12 - Поезд 1 готовится к маршруту (круг 3)
+Xodjasan                 ->   Avtovogzal               [ 07:14 - 07:18 ]
+Avtovogzal               ->   VioleteMemarAdjemi       [ 07:19 - 07:23 ]
+VioleteMemarAdjemi       ->   8Noyabr                  [ 07:24 - 07:28 ]
+07:29 - Поезд 1 делает разворот
+8Noyabr                  ->   VioleteMemarAdjemi       [ 07:31 - 07:35 ]
+VioleteMemarAdjemi       ->   Avtovogzal               [ 07:36 - 07:40 ]
+Avtovogzal               ->   Xodjasan                 [ 07:41 - 07:45 ]
+07:46 - Поезд 1 завершил круг 3
+07:48 - Поезд 1 готовится к маршруту (круг 4)
+Xodjasan                 ->   Avtovogzal               [ 07:50 - 07:54 ]
+Avtovogzal               ->   VioleteMemarAdjemi       [ 07:55 - 07:59 ]
+VioleteMemarAdjemi       ->   8Noyabr                  [ 08:00 - 08:04 ]
+08:05 - Поезд 1 делает разворот
+8Noyabr                  ->   VioleteMemarAdjemi       [ 08:07 - 08:11 ]
+VioleteMemarAdjemi       ->   Avtovogzal               [ 08:12 - 08:16 ]
+Avtovogzal               ->   Xodjasan                 [ 08:17 - 08:21 ]
+08:22 - Поезд 1 завершил круг 4
+08:24 - Поезд 1 готовится к маршруту (круг 5)
+Xodjasan                 ->   Avtovogzal               [ 08:26 - 08:30 ]
+Avtovogzal               ->   VioleteMemarAdjemi       [ 08:31 - 08:35 ]
+VioleteMemarAdjemi       ->   8Noyabr                  [ 08:36 - 08:40 ]
+08:41 - Поезд 1 делает разворот
+8Noyabr                  ->   VioleteMemarAdjemi       [ 08:43 - 08:47 ]
+VioleteMemarAdjemi       ->   Avtovogzal               [ 08:48 - 08:52 ]
+Avtovogzal               ->   Xodjasan                 [ 08:53 - 08:57 ]
+08:58 - Поезд 1 завершил круг 5
+09:00 - Поезд 1 завершил маршрут фиолетовой линии

@@ -1,0 +1,4 @@
+/home/stud-11/Desktop/Aslan/proga/BMetro/cmake-build-debug/CMakeFiles/metro_lib.dir
+/home/stud-11/Desktop/Aslan/proga/BMetro/cmake-build-debug/CMakeFiles/BMetro.dir
+/home/stud-11/Desktop/Aslan/proga/BMetro/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/stud-11/Desktop/Aslan/proga/BMetro/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -37,7 +37,7 @@ void toAvtovogzal(int index);
 void toXodjasan(int index);
 void logAction(int index, const std::string& action);
 
-void Dvijeniye_violete(int index);
+void Dvijeniye_violete(int index, int amountOfCircles);
 
 
 
@@ -124,5 +124,18 @@ void HeziAslanov_to_Ahmedli(int index);
 void Dvijeniye_green(int index, int amountOfCircles);
 void Dvijeniye_krasniy(int index, int amountOfCircles);
 
+
+
+
+
+extern std::mutex JafarJabbarli_Xetai, Xetai_JafarJabbarli;
+
+
+
+void JafarJabbarli_to_Xetai(int index);
+void Xetai_to_JafarJabbarli(int index);
+
+
+void Dvijeniye_Solatoviy(int index, int amountOfCircles);
 
 #endif
